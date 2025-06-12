@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, userDocument } from './schema/user.schema';
 import { Model } from 'mongoose';
-import { SignupDtoSchema } from './dto/create-user.dto';
+import { SignupDtoSchema } from './dto/signupDto';
 
 @Injectable()
 export class UserService {
@@ -30,7 +30,7 @@ export class UserService {
     return this.userModel.findByIdAndDelete(id).exec();
   }
 
-  async findByEmail(email: string): Promise<userDocument | null> {
-    return this.userModel.findOne({ email }).exec();
+  async findByEmail(email: string, requirePassword = false): Promise<userDocument | null> {
+    return this.userModel.findOne({ email }).select(requirePassword ? '+password' : '-password').exec();
   }
 }

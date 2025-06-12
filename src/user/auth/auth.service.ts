@@ -13,7 +13,7 @@ export class AuthService {
     ) { }
 
     public async signIn(email: string, password: string) {
-        const user = await this.userService.findByEmail(email);
+        const user = await this.userService.findByEmail(email, true);
         if (!user) {
             throw new Error("Account not found, please register first.");
         }
@@ -34,6 +34,7 @@ export class AuthService {
 
     public async signUp(name: string, email: string, password: string) {
         const existingUser = await this.userService.findByEmail(email);
+        console.log(existingUser);
         if (existingUser) {
             throw new BadRequestException("Email already exists, please login instead.");
         }
@@ -42,7 +43,7 @@ export class AuthService {
         return {
             id: newUser.id as string,
             name: newUser.name,
-            email: newUser.email
+            email: newUser.email,
         };
     }
 

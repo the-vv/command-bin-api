@@ -7,7 +7,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { SignupDtoSchema } from './dto/create-user.dto';
+import { SignupDtoSchema } from './dto/signupDto';
 
 @Controller('user')
 export class UserController {
