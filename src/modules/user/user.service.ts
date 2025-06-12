@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, userDocument } from './schema/user.schema';
 import { Model } from 'mongoose';
-import { SignupDtoSchema } from './dto/signupDto';
+import { SignupDto } from './dto/signupDto';
 
 @Injectable()
 export class UserService {
 
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  create(createUserDto: SignupDtoSchema) {
+  create(createUserDto: SignupDto) {
     const createdUser = new this.userModel(createUserDto);
     return createdUser.save();
   }

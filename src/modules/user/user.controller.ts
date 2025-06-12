@@ -7,14 +7,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { SignupDtoSchema } from './dto/signupDto';
+import { SignupDto } from './dto/signupDto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: SignupDtoSchema) {
+  create(@Body() createUserDto: SignupDto) {
     return this.userService.create(createUserDto);
   }
 

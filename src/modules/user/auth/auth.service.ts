@@ -3,6 +3,7 @@ import { UserService } from "../user.service";
 import { compareSync, hashSync } from 'bcrypt';
 import { JwtService } from "@nestjs/jwt";
 import { userDocument } from "../schema/user.schema";
+import { JwtPayload } from "src/models/jwt";
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
         if (!isPasswordValid) {
             throw new UnauthorizedException();
         }
-        const payload = { sub: user.id as string, email: user.email, name: user.name };
+        const payload: JwtPayload = { sub: user.id as string, email: user.email, name: user.name };
         return {
             access_token: await this.jwtService.signAsync(payload),
             user: {
@@ -34,7 +35,6 @@ export class AuthService {
 
     public async signUp(name: string, email: string, password: string) {
         const existingUser = await this.userService.findByEmail(email);
-        console.log(existingUser);
         if (existingUser) {
             throw new BadRequestException("Email already exists, please login instead.");
         }
