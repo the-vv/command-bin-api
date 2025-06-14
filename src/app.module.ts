@@ -7,10 +7,25 @@ import { ConfigModule } from '@nestjs/config';
 import { FolderModule } from './modules/folder/folder.module';
 import { JwtDecodeMiddleware } from './middlewares/jwt-decode.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            translateTime: 'SYS:standard',
+            ignore: 'pid,hostname,req,res,responseTime',
+            messageFormat: '{req.method} {req.url} - {res.statusCode} - {responseTime}ms',
+          },
+        },
+      },
+      exclude: ['health', 'status'], // Exclude health and status routes from logging
+    }),
     MongooseModule.forRoot(process.env.MONGO_URI!),
     JwtModule.register({
       global: true,
