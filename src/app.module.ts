@@ -9,6 +9,7 @@ import { JwtDecodeMiddleware } from './middlewares/jwt-decode.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { LoggerModule } from 'nestjs-pino';
 import { CategoryModule } from './modules/category/category.module';
+import { CommandModule } from './modules/command/command.module';
 
 @Module({
   imports: [
@@ -31,11 +32,12 @@ import { CategoryModule } from './modules/category/category.module';
     JwtModule.register({
       global: true,
       secret: (console.log(process.env.JWT_SECRET), process.env.JWT_SECRET),
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '15d' },
     }),
     UserModule,
     FolderModule,
     CategoryModule,
+    CommandModule,
   ],
   controllers: [AppController],
   providers: [AppService],

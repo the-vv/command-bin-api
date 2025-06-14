@@ -18,7 +18,8 @@ export class JwtDecodeMiddleware implements NestMiddleware {
         decoded = this.jwtService.verify(token) satisfies JwtPayload;
       } catch (e) {
         throw new UnauthorizedException(e instanceof Error ? e.message : 'Invalid token');
-      } if (!decoded) {
+      }
+      if (!decoded) {
         throw new UnauthorizedException('Invalid token');
       }
       req.user = {

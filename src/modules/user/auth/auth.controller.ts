@@ -15,7 +15,6 @@ export class AuthController {
     @UsePipes(new ZodValidationPipe(signinDto))
     public async signIn(@Body() body: SigninDto) {
         const a =  await this.authService.signIn(body.email, body.password);
-        console.log(a);
         return a;
     }
 
