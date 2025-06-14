@@ -8,6 +8,7 @@ import { FolderModule } from './modules/folder/folder.module';
 import { JwtDecodeMiddleware } from './middlewares/jwt-decode.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { LoggerModule } from 'nestjs-pino';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -29,11 +30,12 @@ import { LoggerModule } from 'nestjs-pino';
     MongooseModule.forRoot(process.env.MONGO_URI!),
     JwtModule.register({
       global: true,
-      secret: process.env.JWT_SECRET,
+      secret: (console.log(process.env.JWT_SECRET), process.env.JWT_SECRET),
       signOptions: { expiresIn: '1d' },
     }),
     UserModule,
     FolderModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

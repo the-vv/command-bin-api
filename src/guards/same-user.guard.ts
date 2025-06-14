@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
 
@@ -13,6 +13,7 @@ export class SameUserGuard implements CanActivate {
     const userId: string = request.params?.userId || request.body?.userId;
     const tokenUserId = request.user?.id;
 
-    return userId === tokenUserId;
+    if (userId !== tokenUserId) throw new ForbiddenException('You are not allowed to perform this action on this user');
+    return true; // User is allowed to proceed
   }
 }

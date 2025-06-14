@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
 import { FolderService } from './folder.service';
-import { createFolderDto, CreateFolderDto } from './dto/create-folder.dto';
+import { createFolderInputSchema, CreateFolderInput } from './dto/create-folder.dto';
 import { nameSchema, TNameSchema } from 'src/utils/common-schemas';
 import { ZodValidationPipe } from 'src/pipes/zod-validation.pipe';
 import { Request } from 'express';
@@ -15,8 +15,8 @@ export class FolderController {
 
   @Post()
   @UseGuards(SameUserGuard)
-  @UsePipes(new ZodValidationPipe(createFolderDto))
-  create(@Body() createFolderDto: CreateFolderDto) {
+  @UsePipes(new ZodValidationPipe(createFolderInputSchema))
+  create(@Body() createFolderDto: CreateFolderInput) {
     return this.folderService.create(createFolderDto);
   }
 

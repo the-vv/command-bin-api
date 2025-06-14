@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFolderDto } from './dto/create-folder.dto';
+import { CreateFolderInput } from './dto/create-folder.dto';
 import { Folder } from './schema/folder.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -12,7 +12,7 @@ export class FolderService {
     @InjectModel(Folder.name) private folderModel: Model<Folder>
   ) {}
 
-  create(createFolderDto: CreateFolderDto) {
+  create(createFolderDto: CreateFolderInput) {
     const folder = new this.folderModel(createFolderDto);
     return folder.save();
   }
