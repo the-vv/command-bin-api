@@ -31,6 +31,6 @@ export class FolderService {
   }
 
   findByUser(userId: string) {
-    return this.folderModel.find({ userId }).exec();
+    return this.folderModel.find({ userId }).select('-userId').exec();
   }
 }

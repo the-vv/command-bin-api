@@ -4,11 +4,11 @@ import { createFolderDto, CreateFolderDto } from './dto/create-folder.dto';
 import { nameSchema, TNameSchema } from 'src/utils/common-schemas';
 import { ZodValidationPipe } from 'src/pipes/zod-validation.pipe';
 import { Request } from 'express';
-import { AuthorizeGuard } from 'src/guards/authorize.guard';
+import { Auth } from 'src/guards/auth.guard';
 import { SameUserGuard } from 'src/guards/same-user.guard';
 
 @Controller('folder')
-@UseGuards(AuthorizeGuard)
+@UseGuards(Auth)
 export class FolderController {
 
   constructor(private readonly folderService: FolderService) { }

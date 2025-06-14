@@ -9,8 +9,8 @@ export type folderDocument = HydratedDocument<Folder>;
 })
 export class Folder {
 
-    @Prop({ auto: true, type: String })
-    _id: string;
+    // @Prop({ auto: true, type: String })
+    // _id: string;
 
     @Prop({ required: true })
     name: string;
