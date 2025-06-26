@@ -16,7 +16,7 @@ export class AuthService {
     public async signIn(email: string, password: string) {
         const user = await this.userService.findByEmail(email, true);
         if (!user) {
-            throw new Error("Account not found, please register first.");
+            throw new BadRequestException("Account not found, please register first.");
         }
         const isPasswordValid = compareSync(password, user.password);
         if (!isPasswordValid) {
