@@ -7,3 +7,11 @@ export const createCategoryInputSchema = z.object({
 });
 
 export type CreateCategoryInput = z.infer<typeof createCategoryInputSchema>;
+
+
+export const updateCategoryInputSchema = z.object({
+    name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
+    description: z.string().optional(),
+});
+
+export type UpdateCategoryInput = z.infer<typeof updateCategoryInputSchema>;

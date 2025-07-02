@@ -22,7 +22,6 @@ export class FolderService {
   }
 
   updateName(id: string, updateFolderDto: TNameSchema) {
-    console.log({ id, updateFolderDto });
     return this.folderModel.findByIdAndUpdate({_id: id}, updateFolderDto).exec();
   }
 

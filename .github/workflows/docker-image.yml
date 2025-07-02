@@ -32,6 +32,6 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /home/thevv/projects/docker/cmd-bin-api
+            cd /home/${{ secrets.VPS_USER }}/projects/docker/cmd-bin-api
             docker compose pull
             docker compose up -d

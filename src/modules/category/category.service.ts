@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category } from './schema/category.schema';
-import { CreateCategoryInput } from './dto/create-category.dto';
-import { TNameSchema } from '../../utils/common-schemas';
+import { CreateCategoryInput, UpdateCategoryInput } from './dto/create-category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -28,7 +27,7 @@ export class CategoryService {
     return this.categoryModel.findByIdAndDelete(id).exec();
   }
 
-  async updateName(id: string, updateCategoryDto: TNameSchema) {
+  async updateName(id: string, updateCategoryDto: UpdateCategoryInput) {
     return this.categoryModel.findByIdAndUpdate({ _id: id }, updateCategoryDto).exec();
   }
 

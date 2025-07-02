@@ -34,4 +34,17 @@ export class CommandService {
   async findByUser(userId: string) {
     return this.commandModel.find({ userId }).select('-userId').exec();
   }
+
+  async findByCategory(categoryId: string) {
+    return this.commandModel.find({ categoryId }).exec();
+  }
+
+  async findByFolder(folderId: string) {
+    return this.commandModel.find({ folderId }).exec();
+  }
+
+  async findRecentCommands(userId: string) {
+    return this.commandModel.find({ userId }).sort({ updatedAt: -1 }).limit(10).exec();
+  }
+
 }

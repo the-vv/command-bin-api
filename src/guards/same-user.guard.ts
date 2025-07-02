@@ -13,6 +13,10 @@ export class SameUserGuard implements CanActivate {
     const userId: string = request.params?.userId || request.body?.userId;
     const tokenUserId = request.user?.id;
 
+    if (!userId || !tokenUserId) {
+      throw new ForbiddenException('User ID is required to perform this action');
+    }
+
     if (userId !== tokenUserId) throw new ForbiddenException('You are not allowed to perform this action on this user');
     return true; // User is allowed to proceed
   }

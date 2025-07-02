@@ -1,8 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Patch, UseGuards, UsePipes, Req, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes, Req, UnauthorizedException, Put } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-import { CreateCategoryInput, createCategoryInputSchema } from './dto/create-category.dto';
-import { nameSchema, TNameSchema } from '../../utils/common-schemas';
+import { CreateCategoryInput, createCategoryInputSchema, UpdateCategoryInput, updateCategoryInputSchema } from './dto/create-category.dto';
 import { Auth } from '../../guards/auth.guard';
 import { SameUserGuard } from '../../guards/same-user.guard';
 import { Request } from 'express';
@@ -10,7 +9,7 @@ import { Request } from 'express';
 @Controller('category')
 @UseGuards(Auth)
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly categoryService: CategoryService) { }
 
   @Post()
   @UseGuards(SameUserGuard)
@@ -33,8 +32,11 @@ export class CategoryController {
     return this.categoryService.findOne(id);
   }
 
-  @Patch(':id/name')
-  async update(@Body(new ZodValidationPipe(nameSchema)) updateCategoryDto: TNameSchema, @Param('id') id: string) {
+  @Put(':id')
+  async update(
+    @Body(new ZodValidationPipe(updateCategoryInputSchema)) updateCategoryDto: UpdateCategoryInput,
+    @Param('id') id: string
+  ) {
     return await this.categoryService.updateName(id, updateCategoryDto);
   }
 
