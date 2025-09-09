@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards, Req, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { FolderService } from './folder.service';
 import { createFolderInputSchema, CreateFolderInput } from './dto/create-folder.dto';
 import { nameSchema, TNameSchema } from 'src/utils/common-schemas';
@@ -37,6 +37,19 @@ export class FolderController {
   @Patch(':id/name')
   update(@Body(new ZodValidationPipe(nameSchema)) updateFolderDto: TNameSchema, @Param('id') id: string) {
     return this.folderService.updateName(id, updateFolderDto);
+  }
+
+  @Post(':id/share')
+  async share(@Param('id') id: string, @Req() req: Request) {
+    const userId = req.user?.id;
+    if (!userId) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+    const updatedFolder = await this.folderService.share(id, userId);
+    if (!updatedFolder) {
+      throw new ForbiddenException('You are not authorized to share this folder or folder does not exist');
+    }
+    return updatedFolder;
   }
 
   @Delete(':id')

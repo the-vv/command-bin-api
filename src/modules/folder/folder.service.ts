@@ -10,7 +10,7 @@ export class FolderService {
 
   constructor(
     @InjectModel(Folder.name) private folderModel: Model<Folder>
-  ) {}
+  ) { }
 
   create(createFolderDto: CreateFolderInput) {
     const folder = new this.folderModel(createFolderDto);
@@ -18,11 +18,11 @@ export class FolderService {
   }
 
   findOne(id: string) {
-    return this.folderModel.find({ _id: id }).exec();
+    return this.folderModel.findOne({ _id: id }).exec();
   }
 
   updateName(id: string, updateFolderDto: TNameSchema) {
-    return this.folderModel.findByIdAndUpdate({_id: id}, updateFolderDto).exec();
+    return this.folderModel.findByIdAndUpdate({ _id: id }, updateFolderDto).exec();
   }
 
   remove(id: string) {
@@ -31,5 +31,9 @@ export class FolderService {
 
   findByUser(userId: string) {
     return this.folderModel.find({ userId }).select('-userId').exec();
+  }
+
+  share(id: string, userId: string) {
+    return this.folderModel.findByIdAndUpdate({ _id: id, userId }, { shared: true }).exec();
   }
 }

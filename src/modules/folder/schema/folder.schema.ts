@@ -22,6 +22,9 @@ export class Folder {
     @Prop({ required: true, type: String })
     userId: string;
 
+    @Prop({ default: false, type: Boolean })
+    shared: boolean;
+
 }
 
 export const folderSchema = SchemaFactory.createForClass(Folder);
